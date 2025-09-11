@@ -1,28 +1,54 @@
-from flask import Flask, render_template_string
-
-# First, ensure Flask is installed:
-# Run in your terminal: pip install flask
-
+from flask import Flask, render_template_string, url_for
 
 app = Flask(__name__)
 
-HTML = """
+MENU_HTML = """
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sabina Bacaoanu - CV</title>
+    <title>Sabina Bacaoanu - Menu</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; background: #f9f9f9; }
-        .container { max-width: 700px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; }
-        h1 { color: #333; }
-        h2 { color: #555; margin-top: 30px; }
+        body { font-family: Arial, sans-serif; background: #e0f7fa; margin: 0; }
+        .menu-container { display: flex; height: 100vh; justify-content: center; align-items: center; }
+        .menu { background: #fff; padding: 40px 60px; border-radius: 12px; box-shadow: 0 4px 16px #b2ebf2; }
+        .menu a { display: block; font-size: 2em; color: #00796b; text-decoration: none; margin: 20px 0; transition: color 0.2s; }
+        .menu a:hover { color: #004d40; }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <div class="menu">
+            <a href="{{ url_for('resume') }}">Resume</a>
+        </div>
+    </div>
+</body>
+</html>
+"""
+
+RESUME_HTML = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sabina Bacaoanu - Resume</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: linear-gradient(135deg, #ffecb3 0%, #ffe0b2 100%); }
+        .container { max-width: 800px; margin: 40px auto; background: #fffde7; padding: 40px; border-radius: 16px; box-shadow: 0 6px 24px #ffd54f; }
+        h1 { color: #ff9800; }
+        h2 { color: #f57c00; margin-top: 30px; }
         ul { padding-left: 20px; }
+        .profile-pic { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #ffb300; margin-bottom: 20px; }
+        .header { display: flex; align-items: center; gap: 30px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Sabina Bacaoanu</h1>
-        <p>Email: sabina@example.com | Location: City, Country</p>
+        <div class="header">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Profile Picture" class="profile-pic">
+            <div>
+                <h1>Sabina Bacaoanu</h1>
+                <p>Email: sabina@example.com | Location: City, Country</p>
+            </div>
+        </div>
         <h2>Profile</h2>
         <p>Motivated professional with experience in web development and a passion for learning new technologies.</p>
         <h2>Skills</h2>
@@ -48,8 +74,13 @@ HTML = """
 
 
 @app.route("/")
-def home():
-    return render_template_string(HTML)
+def menu():
+    return render_template_string(MENU_HTML)
+
+
+@app.route("/resume")
+def resume():
+    return render_template_string(RESUME_HTML)
 
 
 if __name__ == "__main__":
